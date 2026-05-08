@@ -1,20 +1,20 @@
 # pulse-sentiment-dashboard
 
-> Real-time sentiment analytics over streaming social/news data. A Python streaming pipeline pushes scored events into a Next.js dashboard with live charts.
+> Real-time sentiment analytics over streaming text data. A Python streaming pipeline pushes scored events into a Next.js dashboard with live charts.
 
 `Python` · `Kafka-style stream` · `Transformers` · `FastAPI` · `WebSockets` · `Next.js` · `Recharts` · `Tailwind`
 
 ## What it does
 
-1. Pulls a stream of short text items (tweets, headlines, comments) from a configurable source.
-2. Scores each item with a fine-tuned `cardiffnlp/twitter-roberta-base-sentiment-latest` model.
+1. Pulls a stream of short text items (headlines, comments, reviews) from a configurable source.
+2. Scores each item with a multilingual transformer sentiment model.
 3. Aggregates rolling windows (1m / 5m / 1h) by topic.
 4. Pushes updates over WebSocket to a Next.js dashboard.
 
 ## Architecture
 
 ```
-Source (Twitter/RSS/CSV) ──► Producer ──► in-memory queue
+Source (RSS / API / CSV) ──► Producer ──► in-memory queue
                                             │
                                             ▼
                           Worker (HF transformer) ──► scored events
@@ -29,7 +29,7 @@ Source (Twitter/RSS/CSV) ──► Producer ──► in-memory queue
 
 ## Features
 
-- **Plug-and-play sources** — Twitter API, RSS, or replay from CSV
+- **Plug-and-play sources** — generic HTTP API, RSS, or replay from CSV
 - **Topic tagging** — keyword + zero-shot classifier
 - **Rolling aggregates** — net sentiment, volume, top entities
 - **Live dashboard** — sparkline per topic, leaderboard, anomaly markers
@@ -58,7 +58,7 @@ npm run dev                                # http://localhost:3000
 ```
 backend/
   pulse/
-    sources/       # twitter.py, rss.py, replay.py
+    sources/       # http_api.py, rss.py, replay.py
     score.py       # HF sentiment model wrapper
     aggregate.py   # rolling-window stats
     api.py         # FastAPI + WebSocket

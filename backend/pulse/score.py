@@ -8,7 +8,7 @@ LABELS = {"negative": -1, "neutral": 0, "positive": 1}
 
 @lru_cache(maxsize=1)
 def _model():
-    name = os.getenv("SENTIMENT_MODEL", "cardiffnlp/twitter-roberta-base-sentiment-latest")
+    name = os.getenv("SENTIMENT_MODEL", "tabularisai/multilingual-sentiment-analysis")
     return pipeline("sentiment-analysis", model=name, truncation=True)
 
 
