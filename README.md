@@ -74,7 +74,7 @@ frontend/
 ## Roadmap
 
 - [ ] Anomaly detection (z-score on volume × sentiment)
-- [ ] Per-language models (Tamil, Hindi)
+- [ ] Per-language models
 - [ ] Export to Parquet for offline analysis
 
 ## License
